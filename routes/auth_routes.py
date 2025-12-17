@@ -55,10 +55,20 @@ def login():
 
     try:
         user = login_user(email, password)
+
+        # JWT identity
         access_token = create_access_token(identity=user["email"])
 
         return jsonify({
-            "access_token": access_token
+            "access_token": access_token,
+            "user": {
+                "name": user.get("name"),
+                "email": user.get("email"),
+                "mobile": user.get("mobile"),
+                "dob": user.get("dob"),
+                # "id": user.get("id"),
+                # "created_at": user.get("created_at")
+            }
         }), 200
 
     except ValueError as e:
